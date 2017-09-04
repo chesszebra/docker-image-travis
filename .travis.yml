@@ -1,0 +1,15 @@
+language: bash
+
+services: docker
+
+before_script:
+  - cd "src"
+  - IMAGE_NAME="chesszebra/travis:latest"
+
+script:
+  - travis_retry docker build -t "$IMAGE_NAME" .
+
+after_script:
+  - docker images
+
+# vim:set et ts=2 sw=2:

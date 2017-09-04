@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Stop on errors
+set -e
+
+# Detect the current user
+OWNER=$(stat -c '%u' /data)
+GROUP=$(stat -c '%g' /data)
+
+# Modify the travis user
+if [ "$OWNER" != "0" ]; then
+    usermod -u $OWNER travis 2> /dev/null
+    groupmod -g $GROUP travis 2> /dev/null
+fi
+
+gosu travis "${@}"
